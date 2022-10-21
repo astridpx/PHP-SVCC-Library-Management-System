@@ -66,7 +66,7 @@ $result = $conn -> query($sql);
               <li class="list">
                 <a href="student-records.php" class="nav-link">
                   <i class="bx bx-book-reader icon" id="active"></i>
-                  <span class="link" id="active">Student</span>
+                  <span class="link" id="active">Student Records</span>
                 </a>
               </li>
               <!-- Issue Books -->

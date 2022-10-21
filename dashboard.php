@@ -58,7 +58,7 @@ if(!isset($_SERVER['HTTP_REFERER'])){
               <li class="list">
                 <a href="student-records.php" class="nav-link">
                   <i class="bx bx-book-reader icon"></i>
-                  <span class="link">Student</span>
+                  <span class="link">Student Records</span>
                 </a>
               </li>
               <!-- Issue Books -->
