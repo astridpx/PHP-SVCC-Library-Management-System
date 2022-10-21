@@ -4,7 +4,7 @@
 <?php
 include 'connect.php';
 
-$sql = "SELECT * FROM student_all_record";
+$sql = "SELECT * FROM student_all_record ORDER BY issue_date DESC, stud_name ASC ";
 $result = $conn -> query($sql);
 
 
@@ -90,6 +90,13 @@ $result = $conn -> query($sql);
                   <span class="link">Books</span>
                 </a>
               </li>
+               <!-- Available Book -->
+               <li class="list">
+                <a href="book-available.php" class="nav-link">
+                  <i class="bx bx-book-content icon"></i>
+                  <span class="link">Available Books</span>
+                </a>
+              </li>
               <div class="bottom-cotent">
                 <!-- logout -->
                 <li class="list">
@@ -130,7 +137,7 @@ $result = $conn -> query($sql);
           </form>
 
         </div>
-        <div class="fixTableHead">
+        <div class="fixTableHead" style="  overflow-y: scroll; height: 22.3rem;">
           <table>
             <thead>
               <tr>
@@ -151,6 +158,7 @@ $result = $conn -> query($sql);
                     # else as the default table. All data will display as a table form
               -->
               <?php
+              // filter by search
             if(isset($_GET['search'])){
 
               $valSearch = $_GET['valSearch'];

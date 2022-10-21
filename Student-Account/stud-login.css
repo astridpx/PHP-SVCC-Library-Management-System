@@ -11,7 +11,7 @@
 #container {
   height: 85vh;
   width: 100%;
-  /* background-image: url("./images/login-bg.jpg"); */
+  background-image: url("./images/studlogin-bg.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -30,7 +30,7 @@
 }
 
 .overlay {
-  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.6));
+  background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
   height: 100%;
   width: 100%;
   display: flex;
@@ -46,16 +46,20 @@
   border-radius: 10px;
   /* transform: translateY(3rem); */
 }
+
 .admin-logo img {
   height: 5rem;
   border-radius: 50%;
+  border: 1px solid #fff;
   margin-left: 10rem;
+
   cursor: pointer;
 }
-.admin-logo h3 {
+.admin-logo h4 {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   color: #fff;
+  margin-bottom: 2rem;
   cursor: pointer;
 }
 .admin-logo .form-txt {
@@ -100,13 +104,22 @@
 }
 .stud-login {
   text-align: center;
-  padding-top: 1rem;
+  padding-top: 2.5rem;
   color: #f0f0f0;
 }
 .stud-login span a {
   color: #fff;
   font-weight: 600;
   font-style: oblique;
+}
+.register-wrapp {
+  /* width: 100%; */
+  padding-top: 0.5rem;
+  text-align: center;
+}
+.register {
+  color: #fff;
+  font-weight: 400;
 }
 
 /* FOOTER */

@@ -82,6 +82,13 @@ if(!isset($_SERVER['HTTP_REFERER'])){
                   <span class="link">Books</span>
                 </a>
               </li>
+              <!-- Available Book -->
+              <li class="list">
+                <a href="book-available.php" class="nav-link">
+                  <i class="bx bx-book-content icon"></i>
+                  <span class="link">Available Books</span>
+                </a>
+              </li>
               <div class="bottom-cotent">
                 <!-- logout -->
                 <li class="list">

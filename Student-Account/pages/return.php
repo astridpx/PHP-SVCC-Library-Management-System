@@ -1,38 +1,103 @@
 
 <?php
 
-include 'connect.php';
+include '../conn.php';
 
 // This will prevent to access the page through typing url 
 if(!isset($_SERVER['HTTP_REFERER'])){
-  header('location: index.php');
+  header('location: ../stud-login.php');
   exit;
 }
 
+// getting the email from login
+session_start();
+$emailLogin = $_SESSION['email-login'];
+
+$sql_fname ="SELECT * FROM student_acc WHERE email='$emailLogin'";
+$result_fname = $conn -> query($sql_fname);
+if ($result_fname->num_rows > 0) {
+  while($row = $result_fname -> fetch_assoc()){
+    $fullname = $row['fullname'];
+  }}
+  
+
+
+// $sql_issue = "SELECT * FROM issue_book WHERE stud_name='$fullname'"; 
+// $result_issue = $conn -> query($sql_issue);
+// if ($result_issue->num_rows > 0) {
+//   while($row_issue = $result_issue -> fetch_assoc()){
+//     $vali_isbn= $row_issue['isbn'];
+//     $vali_title = $row_issue['title'];
+//     $vali_name = $row_issue['stud_name'];
+//      $vali_email = $row_issue['email'];
+//   }}
 
 // get the value of form
 if (isset($_GET['submit'])){
   #get the value in isbn
   $isbn = $_GET['isbn'];
+  $title =$_GET['title'];
+  $name =$_GET['name'];
+  $email =$_GET['email'];
+
 
   # connect into database
   $sql = "SELECT * FROM issue_book WHERE isbn='$isbn'";
   $result = $conn -> query($sql);
 
   if ($result->num_rows > 0) {
-    # delete script
-    $sql = "DELETE FROM issue_book WHERE isbn='$isbn'";
-    $result = mysqli_query($conn, $sql);
+    while($row = $result -> fetch_assoc()){
+      $valid_isbn= $row['isbn'];
+      $valid_title= $row['title'];
+      $valid_name= $row['stud_name'];
+      $valid_email = $row['email'];
+    }
+        # delete script
+        if($valid_isbn == $isbn && $valid_title == $title && $email == $emailLogin  && $email == $valid_email && $name == $fullname){
+          $sql_delete = "DELETE FROM issue_book WHERE isbn='$isbn'";
+          $result_delete = mysqli_query($conn, $sql_delete);
+          
+          if($result_delete){
 
-    if($sql){
-      echo "<script>alert('Deleted Successfully');window.location.href = 'return-book.php';</script>";
-    }   
-
-  }else{
-    echo "<script type='text/javascript'>alert('No Records found of ISBN with value of {$isbn}');</script>";
-  }
+            echo "<script>alert('Deleted Successfully');window.location.href = 'return.php';</script>";
+          }
+          // echo "$valid_isbn = $isbn";
+          // echo "$valid_email = $email";
+          // echo "$fullname = $name";
+          // echo "$valid_title = $title";
+          
+          // $sql2 = "DELETE FROM issue_book WHERE title='$title'";
+          // $sql3 = "DELETE FROM issue_book WHERE stud_name='$fullname'";
+          // $sql4 = "DELETE FROM issue_book WHERE email='$emailLogin'";
   
-} 
+        
+        }else if($valid_isbn != $isbn && $valid_title == $title && $email == $emailLogin  &&  $email == $valid_email && $name == $fullname){
+          echo "<script type='text/javascript'>alert('Your ISBN must be correct. ERROR: \"{$isbn}\"');</script>";
+
+        }else if($valid_isbn == $isbn && $valid_title != $title && $email == $emailLogin  &&  $email == $valid_email && $name == $fullname){
+          echo "<script type='text/javascript'>alert('You don\'t borrow book with name of: \"{$title}\"');</script>";
+        
+        }else if($valid_isbn == $isbn && $valid_title == $title && $email != $emailLogin &&  $email == $valid_email && $name == $fullname){
+          echo "<script type='text/javascript'>alert('The email in this account is not yours: \"{$email}\"');</script>";
+       
+        }else if($valid_isbn == $isbn && $valid_title == $title && $email != $emailLogin &&  $email != $valid_email && $name == $fullname){
+          echo "<script type='text/javascript'>alert('There is no email registered here: \"{$email}\"');</script>";
+       
+        }else if($valid_isbn == $isbn && $valid_title == $title && $email == $emailLogin &&  $email != $valid_email && $name == $fullname){
+          echo "<script type='text/javascript'>alert('You cannot return books that is not in your email \"{$email}\"');</script>";
+       
+        }else if($valid_isbn == $isbn && $valid_title == $title && $email == $emailLogin  &&  $email == $valid_email && $name != $fullname){
+          echo "<script type='text/javascript'>alert('You cannot return books that is not in your name \"{$name}\"');</script>";
+       
+        } else{
+          echo "<script type='text/javascript'>alert('WE CAN\'T FIND THE DATA YOU ENTER. MAKE SURE THE SPELLING IS CORRECT');</script>";
+          // echo "$name = $valid_name = $fullname" ;
+        }
+}else{
+  echo "<script type='text/javascript'>alert('No records found with ISBN of \"{$isbn}\".');</script>";
+}
+} // END OF SUBMIT
+
  // get the value of scann
  if(isset($_GET['scan'])){
   
@@ -65,8 +130,8 @@ if (isset($_GET['submit'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
-    <!-- CSS -->
-    <link rel="stylesheet" href="./css/return-books.css" />
+      <!-- CSS -->
+      <link rel="stylesheet" href="../Styles/return.css" />   
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -77,7 +142,7 @@ if (isset($_GET['submit'])){
     <div class="container">
       <header class="navbar">
         <div class="logo">
-          <img src="./images/open-book-logo.jpg" class="logo-pic" />
+        <img src="../images/open-book-logo.jpg" class="logo-pic" />
           <h3>SVCC LMS</h3>
         </div>
         <div class="title">
@@ -92,58 +157,51 @@ if (isset($_GET['submit'])){
         <div class="sidebar">
           <div class="underline"></div>
           <div class="menu">
-            <img src="./images/admin2.png" id="profile" />
-            <span class="user-menu">Admin</span>
+          <img src="../images/student-logo.png" id="profile" />
+            <span class="user-menu"><?php echo $fullname?></span>
           </div>
 
           <div class="sidebar-content">
             <ul class="lists">
               <!-- dashboard -->
               <li class="list">
-                <a href="dashboard.php" class="nav-link">
+                <a href="home.php" class="nav-link">
                   <i class="bx bx-home-alt icon"></i>
-                  <span class="link">Dashboard</span>
-                </a>
-              </li>
-              <!-- student -->
-              <li class="list">
-                <a href="student-records.php" class="nav-link">
-                  <i class="bx bx-book-reader icon"></i>
-                  <span class="link">Student</span>
+                  <span class="link">Home</span>
                 </a>
               </li>
               <!-- Issue Books -->
               <li class="list">
-                <a href="issue-book.php" class="nav-link">
+                <a href="issue.php" class="nav-link">
                   <i class="bx bx-book-bookmark icon"></i>
                   <span class="link">Issue Books</span>
                 </a>
               </li>
               <!-- return books -->
               <li class="list">
-                <a href="return-book.php" class="nav-link">
+                <a href="return.php" class="nav-link">
                   <i class="bx bx-library icon" id="active"></i>
                   <span class="link" id="active">Return books</span>
                 </a>
               </li>
               <!-- Books -->
               <li class="list">
-                <a href="books.php" class="nav-link">
+                <a href="book.php" class="nav-link">
                   <i class="bx bx-book icon"></i>
                   <span class="link">Books</span>
                 </a>
               </li>
-                  <!-- Available Book -->
-              <li class="list">
-                <a href="book-available.php" class="nav-link">
-                  <i class="bx bx-book-content icon"></i>
-                  <span class="link">Available Books</span>
+               <!-- Books transactions -->
+               <li class="list">
+                <a href="pending.php" class="nav-link">
+                  <i class="bx bx-book icon" ></i>
+                  <span class="link" >Transactions</span>
                 </a>
               </li>
               <div class="bottom-cotent">
                 <!-- logout -->
                 <li class="list">
-                  <a href="index.php" class="nav-link">
+                  <a href="../logout.php" class="nav-link">
                     <i class="bx bx-log-out icon a"></i>
                     <span class="link">Logout</span>
                   </a>
@@ -160,7 +218,7 @@ if (isset($_GET['submit'])){
          #######################-->
 
       <!-- Return form -->
-      <div class="form-wrapp" style="background-image: url('./images/return-book-form.jpg');">
+      <div class="form-wrapp" style="background-image: url('../images/return-book-form.jpg');">
         <div class="overlay"> </div>
 
         <div class="add-form">
@@ -190,23 +248,23 @@ if (isset($_GET['submit'])){
             <div class="form-input">
               <label for="isbn">ISBN: </label>
              
-              <input type="text" name="isbn" id="isbn" value="<?php if(isset($isbnVal)){echo $isbnVal;} ?>" autocomplete="off"  required />
+              <input type="text" name="isbn" id="isbn" value="<?php if(isset($isbnVal)){echo $isbnVal; }?>" <?php if(isset($isbnVal)){ ?>readonly="readonly"<?php ;}?> autocomplete="off"  required />
             </div>
             <div class="form-input">
               <label for="title">Title:</label>
-              <input type="text" name="title" id="" value="<?php if(isset($titleVal)){echo $titleVal;} ?>" autocomplete="off" required/>
+              <input type="text" name="title" id="" value="<?php if(isset($titleVal)){echo $titleVal;} ?>"  <?php if(isset($isbnVal)){ ?>readonly="readonly"<?php ;}?> autocomplete="off" required/>
             </div>
             <div class="form-input">
               <label for="dateReturn">Date Return:</label>
-              <input type="date" name="dateReturn" id="date"  required />
+              <input type="date" name="dateReturn" id="date" <?php if(isset($isbnVal)){ ?>readonly="readonly"<?php ;}?> required />
             </div>
             <div class="form-input">
               <label for="name">Student Name:</label>
-              <input type="text" name="name" id="" value="<?php if(isset($nameVal)){echo $nameVal;} ?>" autocomplete="off" required/>
+              <input type="text" name="name" id="" value="<?php if(isset($nameVal)){echo $nameVal;}else{ echo $fullname;} ?>" <?php if(isset($isbnVal)){ ?>readonly="readonly"<?php ;}?> autocomplete="off" required/>
             </div>
             <div class="form-input">
               <label for="email">Email:</label>
-              <input type="email" name="email" id="" value="<?php if(isset($emailVal)){echo $emailVal;} ?>" autocomplete="off" required/>
+              <input type="email" name="email" id="" value="<?php if(isset($emailVal)){echo $emailVal;}else{ echo $emailLogin;} ?>" <?php if(isset($isbnVal)){ ?>readonly="readonly"<?php ;}?> autocomplete="off" required/>
             </div>
             <div class="btn-form">
               <button name="submit" id="save">Save</button>

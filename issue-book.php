@@ -1,15 +1,9 @@
-
 <?php
 
 include 'connect.php';
 $sql = "SELECT * FROM issue_book";
+$sql_list = "SELECT * FROM books_pending";
 $result = $conn -> query($sql);
-
-// This will prevent to access the page through typing url 
-if(!isset($_SERVER['HTTP_REFERER'])){
-  header('location: index.php');
-  exit;
-}
 
 // for handling the insert book in database
 if (isset($_POST['submit'])) {
@@ -25,36 +19,60 @@ if (isset($_POST['submit'])) {
   $nameTrans  = ucwords($name);
   $emailTrans  = strtolower($email);
  
-		#try if the isbn is already exist
-		$sql = "SELECT * FROM issue_book WHERE isbn='$isbn'";
-		$result = mysqli_query($conn, $sql);
+   #try if the isbn is already exist
+   $sql = "SELECT * FROM issue_book WHERE isbn='$isbn'";
+   $result = mysqli_query($conn, $sql); 
 
-		if (!$result->num_rows > 0) {
 
+  //  BOOKL LIST QUERY
+  $sql_list = "SELECT  * FROM book_list WHERE isbn='$isbn'";
+  $result_list = mysqli_query($conn, $sql_list);
+
+  if ($result_list !== false && $result_list->num_rows > 0) {
+    if($row = $result_list -> fetch_assoc()){
+      $isbn_list = $row['isbn'];  
+      $title_list = $row['title'];
+  
+
+      if ($isbn == $isbn_list && $title_list == $titleTrans ){
+        // echo "<script>alert('{$titleTrans} ');</script>";
+        if (!$result->num_rows > 0) {
           # inserting the user input in issue_book databasse
           $sql = "INSERT INTO issue_book (isbn, title, issue_date, stud_name, email)
               VALUES ('$isbn', '$titleTrans', '$dateIssue', '$nameTrans', '$emailTrans')";
-
+    
           # inserting the user input im student_all_record database
           $sql2 = "INSERT INTO student_all_record (isbn, title, issue_date, stud_name, email)
               VALUES ('$isbn', '$titleTrans', '$dateIssue', '$nameTrans', '$emailTrans')";
-
+    
           # ressult for issue book insert and student_all_record insert
           $result = mysqli_query($conn, $sql);
           $result2 = mysqli_query($conn, $sql2);
-
+          
           #if the inserting data is completed
           if ($result) {      
             echo "<script>alert('Record has been saved successfully');window.location.href = 'issue-book.php';</script>";  
-
+    
           } else {
             # if there is an error in connecting database
             echo "<script>alert('Woops! Something Wrong Went.');</script>";  
           }
           
-		} else {
-			echo "<script>alert('Oooops!. This book is already taken');window.location.href = 'issue-book.php';</script>";
-		}
+        } else {
+        echo "<script>alert('Oooops!. This book is already taken');</script>";
+        // window.location.href = 'issue.php';
+          } 
+
+      }else if ($isbn == $isbn_list && $title_list !== $titleTrans ){
+        echo "<script>alert('ERROR: [ {$titleTrans} ] Title must be correct.');window.location.href = 'issue-book.php';</script>";  
+      }
+    } //row 
+  }else{
+    echo "<script>alert('Data NOT exist in Book list');window.location.href = 'issue-book.php';</script>"; 
+  }
+
+
+	
 		
 }
 
@@ -187,6 +205,13 @@ if (isset($_POST['submit'])) {
                 <a href="books.php" class="nav-link">
                   <i class="bx bx-book icon"></i>
                   <span class="link">Books</span>
+                </a>
+              </li>
+                  <!-- Available Book -->
+             <li class="list">
+                <a href="book-available.php" class="nav-link">
+                  <i class="bx bx-book-content icon"></i>
+                  <span class="link">Available Books</span>
                 </a>
               </li>
               <div class="bottom-cotent">

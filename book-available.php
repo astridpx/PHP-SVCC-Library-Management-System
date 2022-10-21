@@ -15,45 +15,22 @@ if(!isset($_SERVER['HTTP_REFERER'])){
 $sql = "SELECT * FROM book_list";
 $result = $conn -> query($sql);
 
-if (isset($_POST['submit'])){
 
-  $isbn = $_POST['isbn'];
-  $title = $_POST['title'];
-  $author = $_POST['name'];
-  $datePublish = $_POST['datePublish'];
+ //  BOOKL LIST QUERY
+//  $sql_issue = "SELECT  * FROM issue_book WHERE isbn='$isbn_list'";
+//  $result_issue = mysqli_query($conn, $sql_issue);
 
-  // Text Transform
-  $titleTrans  = strtoupper($title);
-  $authorTrans  = ucwords($author);
+//  if ($result_issue !== false && $result_issue->num_rows > 0) {
+//    if($rows = $result_issue -> fetch_assoc()){
+//      $isbn_issue = $rows['isbn'];  
 
-  	#try if the isbn is already exist
-		$sql = "SELECT * FROM book_list WHERE isbn='$isbn'";
-		$result = mysqli_query($conn, $sql);
-
-		if (!$result->num_rows > 0) {
-
-          # inserting the user input in book_list databasse
-          $sql = "INSERT INTO book_list (isbn, title, author, publish_date)
-              VALUES ('$isbn', '$titleTrans', '$authorTrans', '$datePublish')";
-
-          $result = mysqli_query($conn, $sql);
-          
-          #if the inserting data is completed
-          if ($result) {      
-            echo "<script>alert('Record has been saved successfully'); window.location.href = 'books.php';</script>";  
-            // header("Location: books.php");
-
-          } else {
-            # if there is an error in connecting database
-            echo "<script>alert('Woops! Something Wrong Went.')</script>";  
-          }
-          
-		} else {
-			echo "<script>alert('ERROR: ISBN Must Be Unique!!')</script>";
-		}
-
-}
-
+//      if($isbn_issue != $isbn_list){
+//        echo $isbn_list;
+//      }else{
+       
+//      }
+//  }
+// }
 ?>
 
 <!DOCTYPE html>
@@ -74,37 +51,6 @@ if (isset($_POST['submit'])){
 
   <body>
     <div class="container">
-      <!-- hidden form -->
-      <div class="screen-overlay">
-        <div class="add-form" style="background-image: url('./images/books-bg.jpg');">
-          <div class="overlay"></div>
-          <h3>Add Books</h3>
-
-          <form action="" method="POST" class="hidden-form">
-            <div class="form-input">
-              <label for="isbn">ISBN: </label>
-              <input type="text" name="isbn" id="" autocomplete="off" required/>
-            </div>
-            <div class="form-input">
-              <label for="title">Title:</label>
-              <input type="text" name="title" id="" autocomplete="off" required/>
-            </div>
-            <div class="form-input">
-              <label for="datePublish">Published Date:</label>
-              <input type="date" name="datePublish" id="date" autocomplete="off" required/>
-            </div>
-            <div class="form-input">
-              <label for="name">Author Name:</label>
-              <input type="text" name="name" id="" autocomplete="off" required/>
-            </div>
-          
-            <div class="btn-form">
-              <button name="submit" id="save">Save</button>
-              <button type="button" id="cancel">Cancel</button>
-            </div>
-          </form>
-        </div>
-      </div>
       <!-- End of hidden form -->
 
       <header class="navbar">
@@ -124,7 +70,7 @@ if (isset($_POST['submit'])){
         <div class="sidebar">
           <div class="underline"></div>
           <div class="menu">
-            <img src="./images/admin2.png" id="profile" />
+          <img src="images/admin2.png" id="profile" />
             <span class="user-menu">Admin</span>
           </div>
 
@@ -137,8 +83,8 @@ if (isset($_POST['submit'])){
                   <span class="link">Dashboard</span>
                 </a>
               </li>
-              <!-- student -->
-              <li class="list">
+                <!-- student -->
+                <li class="list">
                 <a href="student-records.php" class="nav-link">
                   <i class="bx bx-book-reader icon"></i>
                   <span class="link">Student</span>
@@ -161,17 +107,18 @@ if (isset($_POST['submit'])){
               <!-- Books -->
               <li class="list">
                 <a href="books.php" class="nav-link">
-                  <i class="bx bx-book icon" id="active"></i>
-                  <span class="link" id="active">Books</span>
+                  <i class="bx bx-book icon" ></i>
+                  <span class="link" >Books</span>
                 </a>
               </li>
-                  <!-- Available Book -->
-                  <li class="list">
+              <!-- Available Book -->
+              <li class="list">
                 <a href="book-available.php" class="nav-link">
-                  <i class="bx bx-book-content icon"></i>
-                  <span class="link">Available Books</span>
+                  <i class="bx bx-book-content icon" id="active"></i>
+                  <span class="link" id="active">Available Books</span>
                 </a>
               </li>
+              <!-- End of list -->
               <div class="bottom-cotent">
                 <!-- logout -->
                 <li class="list">
@@ -182,7 +129,6 @@ if (isset($_POST['submit'])){
                 </li>
               </div>
             </ul>
-            <!-- End of list -->
 
           </div>
         </div>
@@ -192,11 +138,8 @@ if (isset($_POST['submit'])){
          #######################-->
 
       <div class="table-wrapper">
-        <!-- Button ADD -->
-        <div class="btn-return">
-          <button id="btn-return">Add</button>
-        </div>
-        <h2>BOOKS LIST</h2>
+        <h2>AVAILABLE BOOKS</h2>
+        
         <div class="fixTableHead">
           <table>
             <thead>
@@ -208,29 +151,42 @@ if (isset($_POST['submit'])){
               </tr>
             </thead>
             <tbody>
+         <?php
 
-              <?php
-           $sql = "SELECT * FROM book_list ORDER BY title";
-           $result = $conn -> query($sql);
-            if ($result->num_rows > 0) {
-              while($row = $result -> fetch_assoc()){
-                ?>
-                  <tr>
-                      <td><?php echo $row['isbn']; ?></td>
-                      <td><?php echo $row['title']; ?></td>
-                      <td><?php echo $row['author']; ?></td>
-                      <td><?php echo $row['publish_date']; ?></td>
-                    </tr>
-                <?php 
-              }
-            }else{
-              ?>   
-             <h4 style="text-align: center;">There is no data</h4> 
-              <?php
-            }    
-        
-            ?>
+            $sql_issue = "SELECT  * FROM issue_book";
+            $result_issue = $conn -> query($sql_issue);
+            if ($result_issue->num_rows > 0) {
+              while($row = $result_issue -> fetch_assoc()){
+               $isbn_issue = $row['isbn'];
 
+              }}
+              // select * from TableB where Accountid not in (select ID from TableA)
+              // SELECT * FROM Customers ORDER BY Country;
+             $sql = "SELECT  * FROM book_list WHERE isbn  NOT IN (SELECT isbn from issue_book) ORDER BY title";
+             $result = mysqli_query($conn, $sql);
+          
+           if ($result->num_rows > 0) {
+             while($row = $result -> fetch_assoc()){
+              // $isbn_list = $row['isbn'];
+  
+               ?>
+                 <tr>
+                     <td><?php echo $row['isbn']; ?></td>
+                     <td><?php echo $row['title']; ?></td>
+                     <td><?php echo $row['author']; ?></td>
+                     <td><?php echo $row['publish_date']; ?></td>
+                   </tr>
+               <?php 
+               
+       
+             }
+           }else{
+             ?>   
+            <h4 style="text-align: center;">No Books Available</h4> 
+             <?php
+           }   
+           ?>
+           
             </tbody>
           </table>
         </div>
@@ -242,17 +198,13 @@ if (isset($_POST['submit'])){
       let addForm = document.querySelector(".screen-overlay");
       let save = document.querySelector("#save");
       let cancel = document.querySelector("#cancel");
-      let hiddenForm = document.querySelector(".hidden-form");
-      
-      // set the date to current date
-      // let date =document.querySelector('#date').valueAsDate = new Date();
 
       btnAdd.addEventListener("click", () => {
         addForm.style.top = "0";
       });
       cancel.addEventListener("click", () => {
-        addForm.style.top = "-100%";
-        hiddenForm.reset();
+        console.log("hello button was clicked");
+        // addForm.style.top = "0";
       });
     </script>
   </body>
