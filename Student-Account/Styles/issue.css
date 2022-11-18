@@ -11,12 +11,14 @@
   height: max-content;
   width: 100%;
   background: #fff;
+  overflow-y: hidden;
 }
 header {
   height: 5rem;
   width: 100%;
   color: #e7e4e4;
-  background-color: #011d55;
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -80,8 +82,8 @@ nav .menu {
 nav .sidebar {
   height: 88vh;
   width: 16rem;
-  background-color: #011d55;
-
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
 }

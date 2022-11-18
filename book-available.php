@@ -40,7 +40,9 @@ $result = $conn -> query($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS -->
-    <link rel="stylesheet" href="./css/books.css" />
+    <!-- <link rel="stylesheet" href="./css/books.css" /> -->
+    <link rel="stylesheet" href="./css/books.css?v=<?php echo time(); ?>">
+
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -86,8 +88,8 @@ $result = $conn -> query($sql);
                 <!-- student -->
                 <li class="list">
                 <a href="student-records.php" class="nav-link">
-                  <i class="bx bx-book-reader icon"></i>
-                  <span class="link">Student Records</span>
+                  <i class="bx bxs-report icon"></i>
+                  <span class="link">Transaction History</span>
                 </a>
               </li>
               <!-- Issue Books -->
@@ -138,8 +140,9 @@ $result = $conn -> query($sql);
          #######################-->
 
       <div class="table-wrapper">
-        <h2>AVAILABLE BOOKS</h2>
-        
+        <h2 style="padding: 2rem 0;">AVAILABLE BOOKS</h2>
+        <form action="" method="GET">
+        </form>
         <div class="fixTableHead">
           <table>
             <thead>
@@ -153,19 +156,19 @@ $result = $conn -> query($sql);
             <tbody>
          <?php
 
-            $sql_issue = "SELECT  * FROM issue_book";
-            $result_issue = $conn -> query($sql_issue);
-            if ($result_issue->num_rows > 0) {
-              while($row = $result_issue -> fetch_assoc()){
-               $isbn_issue = $row['isbn'];
+            // $sql_issue = "SELECT  * FROM issue_book";
+            // $result_issue = $conn -> query($sql_issue);
+            // if ($result_issue->num_rows > 0) {
+            //   while($row = $result_issue -> fetch_assoc()){
+            //    $isbn_issue = $row['isbn'];
 
-              }}
+            //   }}
               // select * from TableB where Accountid not in (select ID from TableA)
               // SELECT * FROM Customers ORDER BY Country;
              $sql = "SELECT  * FROM book_list WHERE isbn  NOT IN (SELECT isbn from issue_book) ORDER BY title";
-             $result = mysqli_query($conn, $sql);
-          
-           if ($result->num_rows > 0) {
+             $result = mysqli_query($conn, $sql);   
+
+            if ($result->num_rows > 0) {
              while($row = $result -> fetch_assoc()){
               // $isbn_list = $row['isbn'];
   

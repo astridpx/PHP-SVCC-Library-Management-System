@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../Styles/issue.css" />
+    <link rel="stylesheet" href="../Styles/issue.css?php echo time(); ?>" />
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -178,17 +178,24 @@ if (isset($_POST['submit'])) {
                   <span class="link" >Transactions</span>
                 </a>
               </li>
-              </ul>
-              <!-- End of list -->
-              <div class="bottom-cotent">
-                <!-- logout -->
-                <li class="list">
-                  <a href="../logout.php" class="nav-link">
-                    <i class="bx bx-log-out icon a"></i>
-                    <span class="link">Logout</span>
+              <!-- prrofile -->
+              <li class="list">
+                  <a href="profileUpdate.php" class="nav-link">
+                    <i class="bx bx-user-circle icon"></i>
+                    <span class="link">My Account</span>
                   </a>
                 </li>
-              </div>
+                <div class="bottom-cotent">
+                  <!-- logout -->
+                  <li class="list">
+                    <a href="../logout.php" class="nav-link">
+                      <i class="bx bx-log-out icon a"></i>
+                      <span class="link">Logout</span>
+                    </a>
+                  </li>
+                </div>
+              </ul>
+              <!-- End of list -->
             </div>
           </div>
         </nav>

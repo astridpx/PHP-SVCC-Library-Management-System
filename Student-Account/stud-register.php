@@ -68,7 +68,9 @@ if ($password == $cpassword) {
 <html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="stud-register.css" />
+    <!-- <link rel="stylesheet" href="stud-register.css" /> -->
+    <link rel="stylesheet" href="./stud-register.css?php echo time(); ?>">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
   </head>

@@ -7,6 +7,10 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+body {
+  max-width: 1366px;
+  /* width: max-content; */
+}
 .container {
   height: 100%;
   width: 100%;
@@ -14,9 +18,12 @@
 }
 header {
   height: 5rem;
-  width: 100%;
+  /* width: 100%; */
+  width: 100vw;
   color: #e7e4e4;
-  background-color: #011d55;
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
+
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -80,7 +87,9 @@ nav .sidebar {
   position: fixed;
   height: 100%;
   width: 16rem;
-  background-color: #011d55;
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
+
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
 }
@@ -142,7 +151,9 @@ nav .sidebar {
   padding-top: 0.5rem;
   padding-bottom: 1rem;
   letter-spacing: 2px;
-  background-color: #e22050;
+  /* background-color: #e22050; */
+  background-color: #e11c4d;
+  border-radius: 10px 10px 0 0;
   color: rgb(241, 241, 241);
   margin-bottom: 2px solid black;
 }
@@ -166,7 +177,8 @@ td {
   border: 1px solid black;
 }
 th {
-  background-color: #e22050;
+  /* background-color: #e22050; */
+  background-color: #e11c4d;
   height: 2.2rem;
   color: #fff;
   /* color: rgb(44, 44, 44); */
@@ -358,8 +370,8 @@ td {
   position: relative;
   z-index: 2;
 }
-#btn-qr {
-  /* height: 2.4rem;
+/* #btn-qr { */
+/* height: 2.4rem;
   width: 6rem;
   margin-left: 1.3rem;
   font-weight: 600;
@@ -370,8 +382,8 @@ td {
   padding: 0 5px;
   letter-spacing: 1.5px;
   transition: 0.3s ease-out; */
-}
-#btn-qr:hover {
-  /* background-color: #2867b9; */
-  /* color: #fff; */
-}
+/* } */
+/* #btn-qr:hover { */
+/* background-color: #2867b9; */
+/* color: #fff; */
+/* } */

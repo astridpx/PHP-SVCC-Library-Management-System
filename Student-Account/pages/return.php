@@ -131,7 +131,7 @@ if (isset($_GET['submit'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
       <!-- CSS -->
-      <link rel="stylesheet" href="../Styles/return.css" />   
+      <link rel="stylesheet" href="../Styles/return.css?php echo time(); ?>" />   
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -198,6 +198,13 @@ if (isset($_GET['submit'])){
                   <span class="link" >Transactions</span>
                 </a>
               </li>
+              <!-- prrofile -->
+              <li class="list">
+                  <a href="profileUpdate.php" class="nav-link">
+                    <i class="bx bx-user-circle icon"></i>
+                    <span class="link">My Account</span>
+                  </a>
+                </li>
               <div class="bottom-cotent">
                 <!-- logout -->
                 <li class="list">

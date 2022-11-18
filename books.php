@@ -63,7 +63,9 @@ if (isset($_POST['submit'])){
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS -->
-    <link rel="stylesheet" href="./css/books.css" />
+    <!-- <link rel="stylesheet" href="./css/books.css" /> -->
+    <link rel="stylesheet" href="./css/books.css?v=<?php echo time(); ?>">
+
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -140,8 +142,8 @@ if (isset($_POST['submit'])){
               <!-- student -->
               <li class="list">
                 <a href="student-records.php" class="nav-link">
-                  <i class="bx bx-book-reader icon"></i>
-                  <span class="link">Student Records</span>
+                  <i class="bx bxs-report icon"></i>
+                  <span class="link">Transaction History</span>
                 </a>
               </li>
               <!-- Issue Books -->
@@ -197,6 +199,12 @@ if (isset($_POST['submit'])){
           <button id="btn-return">Add</button>
         </div>
         <h2>BOOKS LIST</h2>
+        <form action="" method="GET">
+          <div class="search-box">
+            <input type="text" name="bookSearch" placeholder="Search here..." id="search" autocomplete="off" />
+            <button type="submit" class="btn-search" name="search">Search</button>
+          </div>
+        </form>
         <div class="fixTableHead">
           <table>
             <thead>
@@ -210,24 +218,50 @@ if (isset($_POST['submit'])){
             <tbody>
 
               <?php
-           $sql = "SELECT * FROM book_list ORDER BY title";
-           $result = $conn -> query($sql);
-            if ($result->num_rows > 0) {
-              while($row = $result -> fetch_assoc()){
-                ?>
+      
+      $sql = "SELECT * FROM book_list ORDER BY title";
+      $result = $conn -> query($sql);
+
+      $bookSearch = $_GET['bookSearch']; 
+      $sql2 = "SELECT * FROM book_list WHERE CONCAT(isbn,title,author,publish_date) 
+      LIKE '%".$bookSearch."%'";
+      $results = mysqli_query($conn, $sql2);   
+
+        // filter by search
+        if(isset($_GET['search'])){
+              if(mysqli_num_rows($results) > 0){
+                foreach($results as $row){
+                  ?>
                   <tr>
-                      <td><?php echo $row['isbn']; ?></td>
-                      <td><?php echo $row['title']; ?></td>
-                      <td><?php echo $row['author']; ?></td>
-                      <td><?php echo $row['publish_date']; ?></td>
+                    <td><?php echo $row['isbn']; ?></td>
+                    <td><?php echo $row['title']; ?></td>
+                    <td><?php echo $row['author']; ?></td>
+                    <td><?php echo $row['publish_date']; ?></td>
                     </tr>
+                  <?php
+                }
+              }else{
+                ?>
+                <h4 style="text-align: center;">No Records Found</h4>
                 <?php 
-              }
-            }else{
-              ?>   
-             <h4 style="text-align: center;">There is no data</h4> 
-              <?php
-            }    
+              }     
+
+        } elseif ($result->num_rows > 0) {
+            while($row = $result -> fetch_assoc()){
+              ?>
+                <tr>
+                    <td><?php echo $row['isbn']; ?></td>
+                    <td><?php echo $row['title']; ?></td>
+                    <td><?php echo $row['author']; ?></td>
+                    <td><?php echo $row['publish_date']; ?></td>
+                  </tr>
+              <?php 
+            }
+        }else{
+          ?>   
+          <h4 style="text-align: center;">There is no data</h4> 
+          <?php
+        }    
         
             ?>
 

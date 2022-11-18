@@ -12,7 +12,7 @@
   justify-content: center;
   align-items: center;
   /* padding: 10px; */
-  background-image: url("./images/studlogin-bg.jpg");
+  background-image: url("./images/svccBG.jpg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -49,7 +49,7 @@
   height: 3px;
   width: 30px;
   border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  background: linear-gradient(135deg, #ee5888, #6b0f2c);
 }
 .content form .user-details {
   display: flex;
@@ -82,7 +82,7 @@ form .input-box span.details {
 }
 .user-details .input-box input:focus,
 .user-details .input-box input:valid {
-  border-color: #09077a;
+  border-color: #6b0f2c;
 }
 
 form .button {
@@ -100,7 +100,9 @@ form .button input {
   letter-spacing: 1px;
   cursor: pointer;
   transition: all 0.3s ease;
-  background-color: #07307c;
+  /* background-color: #07307c; */
+  background-color: #6b0f2c;
+
   /* background: linear-gradient(135deg, #71b7e6, #9b59b6); */
 }
 .login {
@@ -108,7 +110,8 @@ form .button input {
   text-align: center;
 }
 form .button input:hover {
-  background-color: #0c44aa;
+  /* background-color: #0c44aa; */
+  background-color: #92163d;
   /* transform: scale(0.99); */
   /* background: linear-gradient(-135deg, #71b7e6, #9b59b6); */
 }

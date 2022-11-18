@@ -41,7 +41,9 @@ if (isset($_POST['submit'])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
-    <link rel="stylesheet" href="./css/style.css" />
+    <!-- <link rel="stylesheet" href="./css/style.css" /> -->
+    <link rel="stylesheet" href="./css/style.css?v=<?php echo time(); ?>">
+
     <!-- font awesome -->
     <script
       src="https://kit.fontawesome.com/b014a35e35.js"
@@ -51,7 +53,7 @@ if (isset($_POST['submit'])) {
   </head>
   <body>
 
-    <div id="container" style="background-image: url('./images/login-bg.jpg');">
+    <div id="container" style="background-image: url('./images/svccBG.jpg');">
      <div class="title">
        <!-- <h2>Library Management System</h2> -->
      </div>

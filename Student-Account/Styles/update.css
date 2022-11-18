@@ -8,14 +8,11 @@
   font-family: "Poppins", sans-serif;
   scroll-behavior: smooth;
 }
-body {
-  max-width: 1366px;
-  /* width: max-content; */
-}
+
 .container {
-  height: 100%;
-  /* width: 100%; */
-  width: 100vw;
+  height: 100vh;
+  overflow-y: hidden;
+  width: 100%;
   background: #fff;
 }
 header {
@@ -24,7 +21,6 @@ header {
   color: #e7e4e4;
   /* background-color: #011d55; */
   background-color: #6b0f2c;
-
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -54,7 +50,16 @@ header {
 /* ========
   Side Bar Menu
    ========*/
-
+.content-wrapper {
+  width: 100%;
+  height: 88vh;
+  display: flex;
+  justify-content: space-between;
+  background: url("../images/svccBg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 nav .menu {
   display: flex;
   flex-direction: column;
@@ -64,9 +69,9 @@ nav .menu {
 }
 .menu .user-menu {
   color: #f0f0f0;
-  font-size: 17px;
-  letter-spacing: 5px;
-  font-weight: 600;
+  font-size: 1rem;
+  /* letter-spacing: 5px; */
+  font-weight: 500;
   padding-top: 1rem;
   cursor: pointer;
 }
@@ -76,6 +81,7 @@ nav .menu {
   width: 5rem;
   border-radius: 50%;
   cursor: pointer;
+  border: 2px #fff solid;
 }
 
 .underline {
@@ -85,12 +91,11 @@ nav .menu {
   background-color: rgb(192, 191, 191);
 }
 nav .sidebar {
-  position: fixed;
+  /* position: fixed; */
   height: 100%;
   width: 16rem;
   /* background-color: #011d55; */
   background-color: #6b0f2c;
-
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
 }
@@ -135,64 +140,67 @@ nav .sidebar {
   color: #fff;
 }
 
-/* ==============
-    Card Box
-    ==============*/
-
-.wrapper-card {
-  position: fixed;
-  /* background-color: aqua; */
-  height: 30rem;
-  width: 58rem;
-  left: 16.5rem;
-  padding-top: 1rem;
-  display: flex;
-  flex-wrap: wrap;
-}
-.card {
-  height: 10rem;
-  width: 17rem;
-  margin-left: 2rem;
-  display: flex;
-  justify-content: space-between;
-  padding-left: 1.5rem;
-  border-radius: 1rem;
-  align-items: center;
-  border: 1px solid;
-  box-shadow: 10px 11px 29px 2px rgb(0 0 0 / 30%);
-  cursor: pointer;
-  /* box-shadow: 8px 15px 29px 0px rgb(0 0 0 / 30%); */
-}
-.card h2 {
-  letter-spacing: 2px;
-  color: #222020;
-  font-size: 30px;
-}
-.card-icon {
+/* SECTION FORM */
+section {
   height: 100%;
-  width: 6rem;
-  border-radius: 0 1rem 1rem 0;
+  width: 82%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  background-color: #e0e0e03f;
 }
 
-.student-card {
-  background-color: #167bbe;
-  border-color: #167bbe;
+section form {
+  /* height: 100%; */
+  color: #f0f0f0;
+  height: 28rem;
+  width: 35vw;
+  background-color: #6b0f2c;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+}
+section form #btn-update {
+  position: absolute;
+  bottom: 2rem;
+  align-self: center;
+  padding: 5px 10px;
+  font-weight: 500;
+  border-radius: 5px;
+  border: 1px solid #1d1d1d00;
+}
+section form h2 {
+  text-align: center;
+  padding: 1rem 0 2rem;
+  margin-bottom: 2rem;
 }
 
-.issue-book-card {
-  background-color: #e22050;
-  border-color: #e22050;
+form .form-field {
+  height: 4rem;
+  width: 100%;
+  padding: 0 2rem;
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
 }
-
-.return-books-card {
-  background-color: #ebbf2f;
-  border-color: #ebbf2f;
+.form-field label {
+  font-size: 18px;
+  font-weight: 500;
+  width: 7.6rem;
 }
-
-.book-card {
-  background-color: #409120;
-  border-color: #409120;
-}
-.wrapper-card {
-  /* display: none; */
+.form-field input {
+  padding: 3px 6px;
+  font-size: 15px;
+  width: 55%;
+  outline: 0;
+  border-radius: 5px;
+  border: 1px solid;
 }

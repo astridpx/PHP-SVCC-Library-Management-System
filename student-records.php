@@ -23,7 +23,9 @@ $result = $conn -> query($sql);
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="./css/student-records.css" />
+    <!-- <link rel="stylesheet" href="./css/student-records.css" /> -->
+    <link rel="stylesheet" href="./css/student-records.css?v=<?php echo time(); ?>">
+
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -65,8 +67,8 @@ $result = $conn -> query($sql);
               <!-- student -->
               <li class="list">
                 <a href="student-records.php" class="nav-link">
-                  <i class="bx bx-book-reader icon" id="active"></i>
-                  <span class="link" id="active">Student Records</span>
+                  <i class="bx bxs-report icon" id="active"></i>
+                  <span class="link" id="active">Transaction History</span>
                 </a>
               </li>
               <!-- Issue Books -->
@@ -117,14 +119,14 @@ $result = $conn -> query($sql);
          #######################-->
 
       <div class="table-wrapper">
-        <h2>Student All Records</h2>
+        <h2>Student Transaction History</h2>
 
         <form action="" method="GET">
         <div class="search-box">
               <input type="text" name="valSearch" placeholder="Search here..." id="search" autocomplete="off" />
               <button type="submit" class="btn-search" name="search">Search</button>
 
-        <form action="" method="GETs">
+        <form action="" method="GET">
             <div class="filter-date">
               <!-- date from -->
               <label for="date-from" class="date-label" >Date From:</label>

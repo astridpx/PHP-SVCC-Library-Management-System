@@ -31,7 +31,7 @@ $result = $conn -> query($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS -->
-    <link rel="stylesheet" href="../Styles/book.css" />
+    <link rel="stylesheet" href="../Styles/book.css?php echo time(); ?>" />
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -102,18 +102,25 @@ $result = $conn -> query($sql);
                   <span class="link" id="active">Transactions</span>
                 </a>
               </li>
+              <!-- prrofile -->
+              <li class="list">
+                  <a href="profileUpdate.php" class="nav-link">
+                    <i class="bx bx-user-circle icon"></i>
+                    <span class="link">My Account</span>
+                  </a>
+                </li>
+                <div class="bottom-cotent">
+                  <!-- logout -->
+                  <li class="list">
+                    <a href="../logout.php" class="nav-link">
+                      <i class="bx bx-log-out icon a"></i>
+                      <span class="link">Logout</span>
+                    </a>
+                  </li>
+                </div>
             </ul>
             <!-- End of list -->
 
-            <div class="bottom-cotent">
-              <!-- logout -->
-              <li class="list">
-                <a href="../logout.php" class="nav-link">
-                  <i class="bx bx-log-out icon a"></i>
-                  <span class="link">Logout</span>
-                </a>
-              </li>
-            </div>
           </div>
         </div>
       </nav>
@@ -122,16 +129,16 @@ $result = $conn -> query($sql);
          #######################-->
 
       <div class="table-wrapper">
-        <h2 style="background-color:#E14D2A;">TRANSACTIONS</h2>
+        <h2 style="background-color:gold;color: #333333; ">TRANSACTIONS</h2>
         
         <div class="fixTableHead">
           <table>
             <thead >
               <tr>
-                <th style="background-color: #E14D2A;" id="bookID">ISBN</th>
-                <th style="background-color: #E14D2A;">Book Title</th>
-                <th style="background-color: #E14D2A;">Name of Author</th>
-                <th style="background-color: #E14D2A;">Date Issue</th>
+                <th style="background-color: gold;color: #333333;" id="bookID">ISBN</th>
+                <th style="background-color: gold;color: #333333;">Book Title</th>
+                <th style="background-color: gold;color: #333333;">Name of Author</th>
+                <th style="background-color: gold;color: #333333;">Date Issue</th>
               </tr>
             </thead>
             <tbody>

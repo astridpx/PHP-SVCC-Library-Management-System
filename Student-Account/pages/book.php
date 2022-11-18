@@ -34,7 +34,9 @@ $result = $conn -> query($sql);
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- CSS -->
-    <link rel="stylesheet" href="../Styles/book.css" />
+    <link rel="stylesheet" href="../Styles/book.css?php echo time(); ?>"/>
+    <!-- <link rel="stylesheet" href="../Styles/book.css?php echo time(); ?>"> -->
+
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -105,18 +107,25 @@ $result = $conn -> query($sql);
                   <span class="link" >Transactions</span>
                 </a>
               </li>
+              <!-- prrofile -->
+                <li class="list">
+                  <a href="profileUpdate.php" class="nav-link">
+                    <i class="bx bx-user-circle icon"></i>
+                    <span class="link">My Account</span>
+                  </a>
+                </li>
+                <div class="bottom-cotent">
+                  <!-- logout -->
+                  <li class="list">
+                    <a href="../logout.php" class="nav-link">
+                      <i class="bx bx-log-out icon a"></i>
+                      <span class="link">Logout</span>
+                    </a>
+                  </li>
+                </div>
             </ul>
             <!-- End of list -->
 
-            <div class="bottom-cotent">
-              <!-- logout -->
-              <li class="list">
-                <a href="../logout.php" class="nav-link">
-                  <i class="bx bx-log-out icon a"></i>
-                  <span class="link">Logout</span>
-                </a>
-              </li>
-            </div>
           </div>
         </div>
       </nav>
@@ -126,7 +135,13 @@ $result = $conn -> query($sql);
 
       <div class="table-wrapper">
         <h2>AVAILABLE BOOKS</h2>
-        
+        <form action="" method="GET">
+
+          <div class="search-box">
+            <input type="text" name="bookSearch" placeholder="Search here..." id="search" autocomplete="off" />
+            <button type="submit" class="btn-search" name="search">Search</button>
+          </form>
+        </div>
         <div class="fixTableHead">
           <table>
             <thead >
@@ -140,19 +155,44 @@ $result = $conn -> query($sql);
             <tbody>
          <?php
 
-            $sql_issue = "SELECT  * FROM issue_book";
-            $result_issue = $conn -> query($sql_issue);
-            if ($result_issue->num_rows > 0) {
-              while($row = $result_issue -> fetch_assoc()){
-               $isbn_issue = $row['isbn'];
+        // ISBN ISSUE 
+            // $sql_issue = "SELECT  * FROM issue_book";
+            // $result_issue = $conn -> query($sql_issue);  
+          
+            // if ($result_issue->num_rows > 0) {
+            //   while($row = $result_issue -> fetch_assoc()){
+            //    $isbn_issue = $row['isbn'];
 
-              }}
-              // select * from TableB where Accountid not in (select ID from TableA)
-              // SELECT * FROM Customers ORDER BY Country;
+            //   }}
+             
              $sql = "SELECT  * FROM book_list WHERE isbn  NOT IN (SELECT isbn from issue_book) ORDER BY title";
              $result = mysqli_query($conn, $sql);
-          
-           if ($result->num_rows > 0) {
+
+             $bookSearch = $_GET['bookSearch']; 
+             $sql2 = "SELECT * FROM book_list WHERE CONCAT(isbn,title,author,publish_date) 
+             LIKE '%".$bookSearch."%'";
+             $results = mysqli_query($conn, $sql2); 
+
+              // filter by search
+              if(isset($_GET['search'])){
+                if(mysqli_num_rows($results) > 0){
+                  foreach($results as $row){
+                    ?>
+                    <tr>
+                      <td><?php echo $row['isbn']; ?></td>
+                      <td><?php echo $row['title']; ?></td>
+                      <td><?php echo $row['author']; ?></td>
+                      <td><?php echo $row['publish_date']; ?></td>
+                      </tr>
+                    <?php
+                  }
+                }else{
+                  ?>
+                  <h4 style="text-align: center;">No Records Found</h4>
+                  <?php 
+                }     
+  
+          } elseif ($result->num_rows > 0) {
              while($row = $result -> fetch_assoc()){
               // $isbn_list = $row['isbn'];
   

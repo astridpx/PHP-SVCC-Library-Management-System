@@ -7,6 +7,10 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+body {
+  max-width: 1366px;
+  /* width: max-content; */
+}
 .container {
   height: 100%;
   width: 100%;
@@ -14,9 +18,12 @@
 }
 header {
   height: 5rem;
-  width: 100%;
+  /* width: 100%; */
+  width: 100vw;
   color: #e7e4e4;
-  background-color: #011d55;
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
+
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -80,7 +87,9 @@ nav .sidebar {
   position: fixed;
   height: 100%;
   width: 16rem;
-  background-color: #011d55;
+  /* background-color: #011d55; */
+  background-color: #6b0f2c;
+
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
 }

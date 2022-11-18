@@ -15,7 +15,8 @@ if(!isset($_SERVER['HTTP_REFERER'])){
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SVCC LMS</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="./css/dashboard.css" />
+    <link rel="stylesheet" href="./css/dashboard.css?v=<?php echo time(); ?>">
+    <!-- <link rel="stylesheet" href="./css/dashboard.css" /> -->
     <!-- Boxicons CSS -->
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
@@ -57,8 +58,8 @@ if(!isset($_SERVER['HTTP_REFERER'])){
               <!-- student -->
               <li class="list">
                 <a href="student-records.php" class="nav-link">
-                  <i class="bx bx-book-reader icon"></i>
-                  <span class="link">Student Records</span>
+                  <i class="bx bxs-report icon"></i>
+                  <span class="link">Transaction History</span>
                 </a>
               </li>
               <!-- Issue Books -->
