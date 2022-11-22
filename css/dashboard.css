@@ -193,6 +193,10 @@ nav .sidebar {
   background-color: #409120;
   border-color: #409120;
 }
+.scan-card {
+  background-color: #ddaf86;
+  border-color: #ddaf86;
+}
 .wrapper-card {
   /* display: none; */
 }

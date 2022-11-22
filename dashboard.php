@@ -101,7 +101,6 @@ if(!isset($_SERVER['HTTP_REFERER'])){
               </div>
             </ul>
             <!-- End of list -->
-
           </div>
         </div>
       </nav>
@@ -131,6 +130,11 @@ if(!isset($_SERVER['HTTP_REFERER'])){
           <h2>Books</h2>
           <img src="./images/book.jpg" class="card-icon" />
         </div>
+
+        <div class="card scan-card">
+          <h2>Scan Record</h2>
+          <img src="./images/qrcode.png" class="card-icon" />
+        </div>
       </div>
       <!-- end of card wrapper -->
     </div>
@@ -143,6 +147,7 @@ let students = document.querySelector(".student-card");
 let issueBook = document.querySelector(".issue-book-card");
 let allRecords = document.querySelector(".return-books-card");
 let books = document.querySelector(".book-card");
+let scanRecord = document.querySelector(".scan-card");
 
 // student card link
 students.addEventListener("click", () => {
@@ -161,6 +166,10 @@ allRecords.addEventListener("click", () => {
 
 books.addEventListener("click", () => {
   window.location.href = "books.php";
+});
+
+scanRecord.addEventListener("click", () => {
+  window.location.href = "scan-record.php";
 });
 
   </script>

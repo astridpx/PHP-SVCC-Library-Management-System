@@ -1,10 +1,19 @@
 <?php
 
 include 'connect.php';
+
 $sql = "SELECT * FROM issue_book";
 $sql_list = "SELECT * FROM books_pending";
 $result = $conn -> query($sql);
 
+$emailQR = "none";
+$width='500';
+$height='500';
+$a='james@gmail.com';
+$url = "https://chart.googleapis.com/chart?cht=qr&chs={$width}x{$height}&chl={$a}";
+
+// echo $email['img'] = $url;
+ 
 // for handling the insert book in database
 if (isset($_POST['submit'])) {
 
@@ -13,6 +22,9 @@ if (isset($_POST['submit'])) {
 	$dateIssue = $_POST['dateIssue'];
 	$name = $_POST['name'];
 	$email = $_POST['email'];
+
+  
+
 
   // input transform
   $titleTrans  = strtoupper($title);
@@ -51,7 +63,10 @@ if (isset($_POST['submit'])) {
           
           #if the inserting data is completed
           if ($result) {      
-            echo "<script>alert('Record has been saved successfully');window.location.href = 'issue-book.php';</script>";  
+            echo "<script>alert('Record has been saved successfully');
+            </script>";
+            // echo "<script>window.open($url, '_blank');</script>";
+            // echo "<script> window.location.href = 'issue-book.php';</script>";  
     
           } else {
             # if there is an error in connecting database
@@ -64,7 +79,8 @@ if (isset($_POST['submit'])) {
           } 
 
       }else if ($isbn == $isbn_list && $title_list !== $titleTrans ){
-        echo "<script>alert('ERROR: [ {$titleTrans} ] Title must be correct.');window.location.href = 'issue-book.php';</script>";  
+        echo "<script>alert('ERROR: [ {$titleTrans} ] Title must be correct.');
+        window.location.href = 'issue-book.php';</script>";  
       }
     } //row 
   }else{
@@ -148,8 +164,29 @@ if (isset($_POST['submit'])) {
             </div>
           </form>
         </div>
+
       </div>
       <!-- End of hidden form -->
+      <!-- EMAIL QRCODE POP UP -->
+     <?php
+     if(isset($email)){
+      // $emails = isset($email);
+      
+     echo" <div class='stud-qr'>
+        <h2>Please take a picture of this.</h2>
+        <img src='https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl={$email}' >
+        <button type='button' id='btn-studQR' >Close</button>
+      </div>";
+     }else{
+      echo" <div class='stud-qr' style='display: none;'>
+      <h2>Please take a picture of this.</h2>
+      <img src='https://chart.googleapis.com/chart?cht=qr&chs=500x500&chl='hahaha' >
+      <button type='button' id='btn-studQR' >Close</button>
+    </div>";
+     }
+     ?>
+      
+      <!-- END OF EMAIL QR -->
 
       <header class="navbar">
         <div class="logo">
@@ -292,6 +329,13 @@ if (isset($_POST['submit'])) {
       let qrcode = document.querySelector('#qrcode');
       let isbn = document.querySelector('#isbn');
       let preValue;
+      let studQR = document.querySelector('#btn-studQR');
+      let studQrWrap = document.querySelector('.stud-qr');
+
+      studQR.addEventListener('click',()=>{
+          studQrWrap.style.display ='none';
+          window.location.href = 'issue-book.php';
+      })
 
       //  set the date to current date
       let date =document.querySelector('#date').valueAsDate = new Date();
